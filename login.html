@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>OAuth Callback</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <script>
+        window.addEventListener("load", function (event) {
+            var $instance = document.getElementsByName("instance")[0],
+                $consumerKey = document.getElementsByName("consumerKey")[0],
+                $callbackUrl = document.getElementsByName("callbackUrl")[0],
+                $button = document.getElementById("login");
+            $button.addEventListener('click', function (event) {
+                window.location = 'https://' + $instance.value 
+                    + '/services/oauth2/authorize?response_type=code&client_id=' + $consumerKey.value
+                    + '&redirect_uri=' + $callbackUrl.value; 
+
+                event.preventDefault();                    
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Salesforce OAuth Login</h1>
+        <form>
+            <div class="form-group">
+                <label for="instance">Salesforce Connected App Instance URL</label>
+                <input name="instance" class="form-control" type="text" placeholder="eu16.salesforce.com">
+            </div>
+            <div class="form-group">
+                <label for="consumerKey">Salesforce Connected App Consumer Key</label>
+                <input name="consumerKey" class="form-control" type="text" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="callbackUrl">Salesforce Consumer App Callback URL</label>
+                <input name="callbackUrl" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <button id="login" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
