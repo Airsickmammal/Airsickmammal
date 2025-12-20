@@ -15,6 +15,78 @@
       <animate attributeName="y2" values="1;0;1" dur="12s" repeatCount="indefinite"/>
     </linearGradient>
 
+    <!-- Combined Shadow Glow -->
+<defs>
+  <filter id="combinedShadow" x="-60%" y="-60%" width="220%" height="220%">
+    <feOffset in="SourceAlpha" dx="0" dy="6" result="off1"/>
+    <feGaussianBlur in="off1" stdDeviation="6" result="blur1"/>
+    <feColorMatrix in="blur1" type="matrix" result="shadow1"
+      values="0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0.6 0"/>
+    <feOffset in="SourceAlpha" dx="0" dy="3" result="off2"/>
+    <feGaussianBlur in="off2" stdDeviation="2" result="blur2"/>
+    <feColorMatrix in="blur2" type="matrix" result="shadow2"
+      values="0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0.65 0"/>
+    <feMerge>
+      <feMergeNode in="shadow2"/>
+      <feMergeNode in="shadow1"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g id="headline"
+   transform="translate(400,200)"
+   text-anchor="middle"
+   filter="url(#combinedShadow)"
+   transform-box="fill-box"
+   transform-origin="center"
+   text-rendering="geometricPrecision"
+   opacity="0">
+  <text x="0" y="-20"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial"
+        font-weight="800"
+        font-size="48"
+        stroke="#0b1220"
+        stroke-width="3.5"
+        stroke-linejoin="round"
+        fill="#ffffff"
+        dominant-baseline="middle">
+    Welcome to
+  </text>
+
+  <text x="0" y="26"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial"
+        font-weight="900"
+        font-size="34"
+        stroke="#0b1220"
+        stroke-width="3"
+        stroke-linejoin="round"
+        fill="#ffffff"
+        dominant-baseline="middle">
+    Airsickmammal Repositories
+  </text>
+
+  <!-- Fade in -->
+  <animate attributeName="opacity" from="0" to="1" dur="0.9s" begin="0.15s" fill="freeze"/>
+
+  <!-- Gentle vertical bob only (translate) using integer-ish values -->
+  <animateTransform attributeName="transform" type="translate"
+                    values="400 200; 400 192; 400 200; 400 206; 400 200"
+                    dur="6s" repeatCount="indefinite" additive="replace"/>
+
+  <!-- Very subtle rotation applied additively (keeps translate stable) -->
+  <animateTransform attributeName="transform" type="rotate"
+                    values="-1.5 400 200; 1.5 400 200; -1.5 400 200"
+                    dur="8s" additive="sum" repeatCount="indefinite"/>
+</g>
+
+
     <!-- soft blur for blobs -->
     <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="28" result="blur"/>
@@ -85,16 +157,13 @@
       <animate attributeName="cy" values="200;180;200" dur="3.9s" begin="0.3s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0;1;0" dur="3.9s" begin="0.3s" repeatCount="indefinite"/>
     </circle>
-<g id="headline" transform="translate(400,200)" text-anchor="middle" filter="url(#glow)" opacity="0">
+<g id="headline" transform="translate(400,200)" text-anchor="middle" filter="url(#combinedShadowGlow)" opacity="0">
   <!-- Line 1: larger -->
   <text x="0" y="-20"
         font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial"
         font-weight="800"
         font-size="68"
         fill="#ffffff"
-        stroke="#0b1220"
-        stroke-width="3.5"
-        stroke-linejoin="round"
         paint-order="stroke fill"
         dominant-baseline="middle">
     Welcome to
@@ -106,9 +175,6 @@
         font-weight="900"
         font-size="40"
         fill="#ffffff"
-        stroke="#0b1220"
-        stroke-width="3"
-        stroke-linejoin="round"
         paint-order="stroke fill"
         dominant-baseline="middle">
     Airsickmammal Repositories
